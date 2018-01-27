@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title></title>
+  
+  <!-- Imagem da aba -->
+  <link rel="icon" href="img/">
+  
+  <!-- Normalize -->
+  <link rel="stylesheet" href="css/normalize.css">
+  
+  <!-- CSS -->
+  <link href="css/estilo.css" rel="stylesheet">
+  
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.css">
+  
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="row center space">
+        <img src="img/logo-alla.png" class="logo" alt="Logo ALLA">
+      </div>
+      <div class= "row center space">
+        <a class="waves-effect waves-light btn" onclick="getUsers()"><i class="material-icons left">people</i>Listar todos usuários</a>
+      </div>
+      <div class= "row center">
+        <a id="buttonInsert" onclick="acao(this)" class="waves-effect waves-light btn green"><i class="material-icons left">add</i>Inserir usuário</a>
+        <a id="buttonSearch" onclick="acao(this)" class="waves-effect waves-light btn blue"><i class="material-icons left">search</i>Buscar usuário</a>
+        <a id="buttonUpdate" onclick="acao(this)" class="waves-effect waves-light btn orange"><i class="material-icons left">edit</i>Atualizar usuário</a>
+        <a id="buttonDelete" onclick="acao(this)" class="waves-effect waves-light btn red"><i class="material-icons left">delete</i>Deletar usuário</a>
+      </div>
+      
+      <!-- Modal Structure -->
+      <div id="modal1" class="modal">
+        <div class="modal-content center">
+          <h4 id="headerModal"></h4>
+          <h5 id="pModal"></h5>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+        </div>
+      </div>
+      
+      <!-- Cadastrar -->
+      <div id="insert" class="row space hide">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="name" type="text" class="validate">
+              <label for="name">Nome</label>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="email" placeholder="teste@email.com" type="email" class="validate">
+              <label for="email">Email</label>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="password" type="password" class="validate">
+              <label for="password">Senha</label>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="phone" placeholder="(xx) xxxxx-xxxx" type="text" class="validate">
+              <label for="phone">Telefone</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="cpf" placeholder="xxx.xxx.xxx-xx" type="text" class="validate">
+              <label for="cpf">CPF</label>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="deficiency" type="text" class="validate">
+              <label for="deficiency">Deficiência</label>
+            </div>
+          </div>
+          
+          <!--
+            <div class="input-field col s12">
+              <select id="deficiency" multiple>
+                <option value="" disabled selected>Escolha pelo menos uma opção</option>
+                <option value="1">Visual</option>
+                <option value="2">Auditiva</option>
+                <option value="3">Intelectual</option>
+                <option value="4">Física</option>
+                <option value="5">Grávida</option>
+                <option value="6">Idoso</option>
+                <option value="7">Nenhuma</option>
+              </select>
+              <label for="deficiency" >Deficiência</label>
+            </div>
+          -->
+          
+          <a class="btn waves-effect waves-light right" onclick="insertUser()" name="action">Enviar
+            <i class="material-icons right">send</i>
+          </a>
+          
+        </form>
+      </div>
+      <!-- Fim Cadastrar -->
+      
+      <!-- Buscar -->
+      <div id="search" class="row space hide">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s3">
+              <input id="searchId" type="text" class="validate">
+              <label for="searchId">ID</label>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col s3">
+              <a class="btn waves-effect waves-light" onclick="getUser()" name="action">Buscar
+                <i class="material-icons right">search</i>
+              </a>
+            </div>
+            
+          </div>
+          
+        </form>
+      </div>
+      <!-- Fim Buscar -->
+      
+      <!-- Alterar -->
+      <div id="update" class="row space hide">
+        
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s3">
+              <input id="updateId" type="text" class="validate">
+              <label for="updateId">ID</label>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col s3">
+              <a class="btn waves-effect waves-light" onclick="searchUser()" name="action">Buscar
+                <i class="material-icons right">search</i>
+              </a>
+            </div>
+            
+          </div>
+          
+        </form>
+        
+        <form id="dataUser" class="col s12 hide">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="name_user" type="text" class="validate">
+              <label for="name_user">Nome</label>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="email_user" placeholder="teste@email.com" type="email" class="validate" disabled>
+              <label for="email_user">Email</label>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="phone_user" placeholder="(xx) xxxxx-xxxx" type="text" class="validate">
+              <label for="phone_user">Telefone</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="cpf_user" placeholder="xxx.xxx.xxx-xx" type="text" class="validate" disabled>
+              <label for="cpf_user">CPF</label>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="deficiency_user" type="text" class="validate">
+              <label for="deficiency_user">Deficiência</label>
+            </div>
+          </div>
+          
+          <a class="btn waves-effect waves-light right" onclick="updateUser()" name="action">Alterar
+            <i class="material-icons right">send</i>
+          </a>
+          
+        </form>
+      </div>
+      <!-- Fim Alterar -->
+      
+      <!-- Deletar -->
+      <div id="delete" class="row space hide">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s3">
+              <input id="deleteId" type="text" class="validate">
+              <label for="deleteId">ID</label>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col s3">
+              <a class="btn waves-effect waves-light" onclick="deleteUser()" name="action">Deletar
+                <i class="material-icons right">delete</i>
+              </a>
+            </div>
+            
+          </div>
+          
+        </form>
+      </div>
+      <!-- Fim Deletar -->
+      
+      <div id="results"></div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script language='javascript' src="js/script.js"></script>
+    <script language='javascript' src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    
+  </body>
+  </html>
